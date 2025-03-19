@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { GalleryVerticalEnd } from 'lucide-react';
+import { GalleryVerticalEnd, User } from 'lucide-react';
+import { routes } from '@/config/routes';
 
 import {
   Sidebar,
@@ -9,21 +10,8 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarRail,
 } from '@/components/ui/sidebar';
-
-// This is sample data.
-const data = {
-  navMain: [
-    {
-      title: 'Users',
-      url: '/dashboard/users',
-    },
-  ],
-};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -34,7 +22,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size='lg' asChild>
               <a href='/dashboard/users'>
                 <div className='bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
-                  <GalleryVerticalEnd className='size-4' />
+                  <User className='size-4' />
                 </div>
                 <div className='flex flex-col gap-0.5 leading-none'>
                   <span className='font-medium'>Users Management</span>
@@ -47,15 +35,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            {data.navMain.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <a href={item.url} className='font-medium'>
-                    {item.title}
-                  </a>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+            {routes
+              .filter((route) => route.showInSidebar)
+              .map((route) => (
+                <SidebarMenuItem key={route.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={route.url} className='font-medium'>
+                      {route.title}
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

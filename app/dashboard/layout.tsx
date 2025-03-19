@@ -1,4 +1,8 @@
+'use client';
+
+import * as React from 'react';
 import { AppSidebar } from '@/components/app-sidebar';
+import { getBreadcrumbs } from '@/config/routes';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,12 +17,16 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { usePathname } from 'next/navigation';
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const breadcrumbs = getBreadcrumbs(pathname);
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -29,15 +37,22 @@ export default function DashboardLayout({
             <Separator orientation='vertical' className='mr-2 h-4' />
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem className='hidden md:block'>
-                  <BreadcrumbLink href='#'>
-                    Building Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className='hidden md:block' />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
+                {breadcrumbs.map((route, index) => (
+                  <React.Fragment key={`${route.url}-${index}`}>
+                    <BreadcrumbItem className='hidden md:block'>
+                      {index === breadcrumbs.length - 1 ? (
+                        <BreadcrumbPage>{route.title}</BreadcrumbPage>
+                      ) : (
+                        <BreadcrumbLink href={route.url}>
+                          {route.title}
+                        </BreadcrumbLink>
+                      )}
+                    </BreadcrumbItem>
+                    {index < breadcrumbs.length - 1 && (
+                      <BreadcrumbSeparator className='hidden md:block' />
+                    )}
+                  </React.Fragment>
+                ))}
               </BreadcrumbList>
             </Breadcrumb>
           </div>
