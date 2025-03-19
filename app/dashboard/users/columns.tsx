@@ -11,8 +11,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export type User = {
+  id: string;
   name: string;
   email: string;
   address: string;
@@ -40,6 +42,7 @@ export const columns: ColumnDef<User>[] = [
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => {
+      const router = useRouter();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -50,7 +53,11 @@ export const columns: ColumnDef<User>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                router.push(`/dashboard/users/${row.original.id}`);
+              }}
+            >
               <Pencil className='mr-2 h-4 w-4' />
               Edit Customer
             </DropdownMenuItem>

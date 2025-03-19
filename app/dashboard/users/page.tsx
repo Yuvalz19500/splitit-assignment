@@ -8,8 +8,16 @@ export default function UsersPage() {
         columns={columns}
         data={[
           {
+            id: '1',
             name: 'John Doe',
             email: 'john@doe.com',
+            address: '123 Main St',
+            age: 30,
+          },
+          {
+            id: '2',
+            name: 'Jane Doe',
+            email: 'jane@doe.com',
             address: '123 Main St',
             age: 30,
           },
