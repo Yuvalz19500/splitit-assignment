@@ -1,4 +1,4 @@
-import { User, UserPlus } from 'lucide-react';
+import { User, UserPen, UserPlus } from 'lucide-react';
 
 export interface Route {
   title: string;
@@ -10,7 +10,7 @@ export interface Route {
 
 export interface BreadcrumbItem {
   title: string;
-  url: string;
+  url?: string;
 }
 
 export const routes: Route[] = [
@@ -41,15 +41,43 @@ export const routes: Route[] = [
       },
       {
         title: 'Create User',
-        url: '/dashboard/users/create',
+      },
+    ],
+    showInSidebar: false,
+  },
+  {
+    title: 'Edit User',
+    url: '/dashboard/users/[id]',
+    icon: UserPen,
+    breadcrumbs: [
+      {
+        title: 'Users',
+        url: '/dashboard/users',
+      },
+      {
+        title: 'Edit User',
       },
     ],
     showInSidebar: false,
   },
 ];
 
+function convertRoutePatternToRegex(pattern: string): RegExp {
+  const regexPattern = pattern.replace(/\[([^\]]+)\]/g, '[^/]+');
+  return new RegExp(`^${regexPattern}$`);
+}
+
 export function getRouteByPath(path: string): Route | undefined {
-  return routes.find((route) => route.url === path);
+  const exactMatch = routes.find((route) => route.url === path);
+  if (exactMatch) return exactMatch;
+
+  return routes.find((route) => {
+    if (route.url.includes('[')) {
+      const regex = convertRoutePatternToRegex(route.url);
+      return regex.test(path);
+    }
+    return false;
+  });
 }
 
 export function getBreadcrumbs(path: string): BreadcrumbItem[] {
