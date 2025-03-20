@@ -18,7 +18,7 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { usePathname } from 'next/navigation';
-import { ThemeModeToggle } from '@/components/ui/theme-mode-toggle';
+import { ThemeModeToggle } from '@/components/theme-mode-toggle';
 
 export default function DashboardLayout({
   children,
