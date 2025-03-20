@@ -26,7 +26,11 @@ const formSchema = z
   })
   .required();
 
-export function UserForm() {
+type Props = {
+  onSubmit: (values: z.infer<typeof formSchema>) => void;
+};
+
+export function UserForm({ onSubmit }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,10 +41,6 @@ export function UserForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
@@ -49,12 +49,12 @@ export function UserForm() {
             control={form.control}
             name='name'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='h-[100px] flex flex-col'>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input placeholder='Enter your name...' {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className='mt-1' />
               </FormItem>
             )}
           />
@@ -62,7 +62,7 @@ export function UserForm() {
             control={form.control}
             name='email'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='h-[100px] flex flex-col'>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
@@ -71,7 +71,7 @@ export function UserForm() {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className='mt-1' />
               </FormItem>
             )}
           />
@@ -79,7 +79,7 @@ export function UserForm() {
             control={form.control}
             name='age'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='h-[100px] flex flex-col'>
                 <FormLabel>Age</FormLabel>
                 <FormControl>
                   <Input
@@ -89,7 +89,7 @@ export function UserForm() {
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className='mt-1' />
               </FormItem>
             )}
           />
@@ -97,12 +97,12 @@ export function UserForm() {
             control={form.control}
             name='address'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='h-[100px] flex flex-col'>
                 <FormLabel>Address</FormLabel>
                 <FormControl>
                   <Input placeholder='Enter your address...' {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className='mt-1' />
               </FormItem>
             )}
           />
