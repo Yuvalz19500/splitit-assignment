@@ -10,22 +10,7 @@ export default function UsersPage() {
       <DataTable
         filters={['name', 'email', 'address', 'age']}
         columns={columns}
-        data={[
-          {
-            id: '1',
-            name: 'John Doe',
-            email: 'john@doe.com',
-            address: '123 Main St',
-            age: 30,
-          },
-          {
-            id: '2',
-            name: 'Jane Doe',
-            email: 'jane@doe.com',
-            address: '123 Main St',
-            age: 30,
-          },
-        ]}
+        data={[]}
         filtersPrefix={
           <Link href='/dashboard/users/create' className='w-full'>
             <Button className='w-full flex items-center justify-center'>
