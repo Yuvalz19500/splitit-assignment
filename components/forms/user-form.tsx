@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,6 +14,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { User } from '@/app/dashboard/users/columns';
+
+export type UserFormValues = Omit<User, 'id'>;
 
 const formSchema = z
   .object({
@@ -88,7 +89,10 @@ export function UserForm({ onSubmit, user }: Props) {
                     placeholder='Enter your age...'
                     type='number'
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.onChange(value === '' ? '' : Number(value));
+                    }}
                   />
                 </FormControl>
                 <FormMessage className='mt-1' />

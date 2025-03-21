@@ -2,12 +2,12 @@ import { Button } from '@/components/ui/button';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import { Column } from '@tanstack/react-table';
 
-type Props = {
-  column: Column<any>;
+type Props<TData> = {
+  column: Column<TData>;
   children: React.ReactNode;
 };
 
-export function SortButtonHeader({ column, children }: Props) {
+export function SortButtonHeader<TData>({ column, children }: Props<TData>) {
   const isSorted = column.getIsSorted();
 
   const handleSort = () => {
@@ -21,16 +21,21 @@ export function SortButtonHeader({ column, children }: Props) {
   };
 
   return (
-    <Button variant='ghost' onClick={handleSort} className='group relative'>
+    <Button
+      variant='ghost'
+      onClick={handleSort}
+      className='group relative h-10 px-2 font-medium -ml-2 justify-start hover:bg-transparent focus:bg-transparent 
+      dark:hover:bg-transparent dark:focus:bg-transparent'
+    >
       {children}
       <span
-        className={`ml-2 ${
+        className={`${
           isSorted ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
         } transition-opacity`}
       >
         {isSorted === false && <ArrowUpDown className='h-3 w-3' />}
-        {isSorted === 'asc' && <ArrowUp className='h-3 w-3' />}
-        {isSorted === 'desc' && <ArrowDown className='h-3 w-3' />}
+        {isSorted === 'desc' && <ArrowUp className='h-3 w-3' />}
+        {isSorted === 'asc' && <ArrowDown className='h-3 w-3' />}
       </span>
     </Button>
   );

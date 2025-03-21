@@ -1,6 +1,6 @@
 'use client';
 
-import { UserForm } from '@/components/forms/user-form';
+import { UserForm, UserFormValues } from '@/components/forms/user-form';
 import { usersService } from '@/services';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -8,12 +8,13 @@ import { toast } from 'sonner';
 export default function CreateUserPage() {
   const router = useRouter();
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: UserFormValues) => {
     try {
       await usersService.createUser(values);
       toast.success('User created successfully');
       router.push('/dashboard/users');
     } catch (error) {
+      console.error('Error creating user:', error);
       toast.error('Failed to create user');
     }
   };

@@ -11,9 +11,11 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useQueryClient } from '@tanstack/react-query';
 import { createColumns, User } from './columns';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export default function UsersPage() {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const {
     data: users = [],
@@ -71,6 +73,9 @@ export default function UsersPage() {
         columns={createColumns({
           onDelete: (userId) => {
             deleteUserMutation.mutate(userId);
+          },
+          onEdit: (userId) => {
+            router.push(`/dashboard/users/${userId}`);
           },
         })}
         data={users}

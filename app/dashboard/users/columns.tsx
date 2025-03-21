@@ -7,12 +7,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown, MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
 
 export type User = {
   id: string;
@@ -22,13 +20,15 @@ export type User = {
   age: number;
 };
 
-// Add this interface to define the props for columns
 interface Props {
   onDelete: (userId: string) => void;
+  onEdit: (userId: string) => void;
 }
 
-// Modify the columns export to be a function that takes props
-export const createColumns = ({ onDelete }: Props): ColumnDef<User>[] => [
+export const createColumns = ({
+  onDelete,
+  onEdit,
+}: Props): ColumnDef<User>[] => [
   {
     header: ({ column }) => {
       return <SortButtonHeader column={column}>Name</SortButtonHeader>;
@@ -57,7 +57,6 @@ export const createColumns = ({ onDelete }: Props): ColumnDef<User>[] => [
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => {
-      const router = useRouter();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -70,7 +69,7 @@ export const createColumns = ({ onDelete }: Props): ColumnDef<User>[] => [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => {
-                router.push(`/dashboard/users/${row.original.id}`);
+                onEdit(row.original.id);
               }}
             >
               <Pencil className='mr-2 h-4 w-4' />
