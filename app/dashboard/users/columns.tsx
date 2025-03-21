@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { SortButtonHeader } from '@/components/ui/sort-button-header';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
+import { ArrowUpDown, MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export type User = {
@@ -29,19 +30,27 @@ interface Props {
 // Modify the columns export to be a function that takes props
 export const createColumns = ({ onDelete }: Props): ColumnDef<User>[] => [
   {
-    header: 'Name',
+    header: ({ column }) => {
+      return <SortButtonHeader column={column}>Name</SortButtonHeader>;
+    },
     accessorKey: 'name',
   },
   {
-    header: 'Email',
+    header: ({ column }) => {
+      return <SortButtonHeader column={column}>Email</SortButtonHeader>;
+    },
     accessorKey: 'email',
   },
   {
-    header: 'Address',
+    header: ({ column }) => {
+      return <SortButtonHeader column={column}>Address</SortButtonHeader>;
+    },
     accessorKey: 'address',
   },
   {
-    header: 'Age',
+    header: ({ column }) => {
+      return <SortButtonHeader column={column}>Age</SortButtonHeader>;
+    },
     accessorKey: 'age',
   },
   {

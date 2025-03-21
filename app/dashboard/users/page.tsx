@@ -67,7 +67,7 @@ export default function UsersPage() {
   return (
     <div className='container mx-auto'>
       <DataTable
-        filters={['name', 'email', 'address', 'age']}
+        filters={['name', 'email', 'address']}
         columns={createColumns({
           onDelete: (userId) => {
             deleteUserMutation.mutate(userId);

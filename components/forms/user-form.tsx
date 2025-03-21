@@ -14,6 +14,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { User } from '@/app/dashboard/users/columns';
 
 const formSchema = z
   .object({
@@ -27,17 +28,18 @@ const formSchema = z
   .required();
 
 type Props = {
+  user?: User;
   onSubmit: (values: z.infer<typeof formSchema>) => void;
 };
 
-export function UserForm({ onSubmit }: Props) {
+export function UserForm({ onSubmit, user }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      age: 18,
-      address: '',
+      name: user?.name || '',
+      email: user?.email || '',
+      age: user?.age || 18,
+      address: user?.address || '',
     },
   });
 

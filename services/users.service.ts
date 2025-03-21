@@ -10,9 +10,9 @@ export class UsersService {
     return users ? JSON.parse(users) : [];
   }
 
-  async getUserById(id: string): Promise<User | null> {
+  async getUserById(id: string): Promise<User | undefined> {
     const users = await this.getAllUsers();
-    return users.find((user) => user.id === id) || null;
+    return users.find((user) => user.id === id);
   }
 
   async createUser(user: Omit<User, 'id'>): Promise<User> {
