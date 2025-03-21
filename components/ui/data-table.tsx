@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({
         {filters.map((columnId) => (
           <Input
             key={columnId}
-            placeholder={`Filter ${columnId}...`}
+            placeholder={`Filter by ${columnId}...`}
             value={
               (table.getColumn(columnId)?.getFilterValue() as string) ?? ''
             }

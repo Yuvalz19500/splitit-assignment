@@ -21,7 +21,13 @@ export type User = {
   age: number;
 };
 
-export const columns: ColumnDef<User>[] = [
+// Add this interface to define the props for columns
+interface Props {
+  onDelete: (userId: string) => void;
+}
+
+// Modify the columns export to be a function that takes props
+export const createColumns = ({ onDelete }: Props): ColumnDef<User>[] => [
   {
     header: 'Name',
     accessorKey: 'name',
@@ -61,7 +67,10 @@ export const columns: ColumnDef<User>[] = [
               <Pencil className='mr-2 h-4 w-4' />
               Edit Customer
             </DropdownMenuItem>
-            <DropdownMenuItem className='text-red-600 hover:text-red-600 focus:text-red-600 data-[highlighted]:text-red-600'>
+            <DropdownMenuItem
+              onClick={() => onDelete(row.original.id)}
+              className='text-red-600 hover:text-red-600 focus:text-red-600 data-[highlighted]:text-red-600'
+            >
               <Trash2 className='mr-2 h-4 w-4 text-red-600' />
               Delete Customer
             </DropdownMenuItem>

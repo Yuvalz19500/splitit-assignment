@@ -43,8 +43,8 @@ export function UserForm({ onSubmit }: Props) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-2'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           <FormField
             control={form.control}
             name='name'
@@ -107,7 +107,9 @@ export function UserForm({ onSubmit }: Props) {
             )}
           />
         </div>
-        <Button type='submit'>Submit</Button>
+        <Button type='submit' className='mt-4'>
+          Submit
+        </Button>
       </form>
     </Form>
   );
