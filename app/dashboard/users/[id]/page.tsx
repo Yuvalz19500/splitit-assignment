@@ -68,6 +68,7 @@ export default function EditUserPage() {
             ...values,
           });
         }}
+        isLoading={editUserMutation.isPending}
       />
     </div>
   );

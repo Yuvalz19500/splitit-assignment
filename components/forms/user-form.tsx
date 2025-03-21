@@ -31,9 +31,10 @@ const formSchema = z
 type Props = {
   user?: User;
   onSubmit: (values: z.infer<typeof formSchema>) => void;
+  isLoading?: boolean;
 };
 
-export function UserForm({ onSubmit, user }: Props) {
+export function UserForm({ onSubmit, user, isLoading }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -113,7 +114,7 @@ export function UserForm({ onSubmit, user }: Props) {
             )}
           />
         </div>
-        <Button type='submit' className='mt-4'>
+        <Button type='submit' className='mt-4' isLoading={isLoading}>
           Submit
         </Button>
       </form>

@@ -2,26 +2,33 @@
 
 import { UserForm, UserFormValues } from '@/components/forms/user-form';
 import { usersService } from '@/services';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { User } from '../columns';
 
 export default function CreateUserPage() {
+  const queryClient = useQueryClient();
   const router = useRouter();
 
-  const handleSubmit = async (values: UserFormValues) => {
-    try {
-      await usersService.createUser(values);
+  const createUserMutation = useMutation({
+    mutationFn: (user: UserFormValues) => usersService.createUser(user),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
       toast.success('User created successfully');
       router.push('/dashboard/users');
-    } catch (error) {
-      console.error('Error creating user:', error);
+    },
+    onError: () => {
       toast.error('Failed to create user');
-    }
-  };
+    },
+  });
 
   return (
     <div className='container mx-auto rounded-md border p-4'>
-      <UserForm onSubmit={handleSubmit} />
+      <UserForm
+        onSubmit={(values) => createUserMutation.mutate(values)}
+        isLoading={createUserMutation.isPending}
+      />
     </div>
   );
 }
